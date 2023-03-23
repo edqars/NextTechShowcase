@@ -1,0 +1,10 @@
+.login-page {
+
+  &__form {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 300px;
+  }
+}
