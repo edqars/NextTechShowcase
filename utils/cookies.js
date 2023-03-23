@@ -22,3 +22,6 @@ export const getCookie = (key) => {
 
     return cookies[key];
 };
+
+
+// changes to create Pull Request!
