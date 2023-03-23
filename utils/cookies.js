@@ -1,3 +1,6 @@
+// тестовое прикручивание кукиз. в процессе, оставил как есть
+
+
 import cookie from 'cookie';
 
 export const setCookie = (key, value, maxAge) => {
@@ -10,4 +13,12 @@ export const setCookie = (key, value, maxAge) => {
     });
 
     document.cookie = cookieValue;
+};
+
+
+
+export const getCookie = (key) => {
+    const cookies = cookie.parse(document.cookie);
+
+    return cookies[key];
 };

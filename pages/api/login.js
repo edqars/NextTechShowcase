@@ -3,7 +3,7 @@ import {getUserByEmail} from "../../utils/database";
 
 export default async function login(req, res) {
     const { email, password } = req.body;
-    const user = await getUserByEmail(email);
+    const user = getUserByEmail(email);
 
     if (!user) {
         return res.status(401).json({ message: 'Invalid email or password' });

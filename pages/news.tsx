@@ -4,10 +4,10 @@ import {Inter} from 'next/font/google'
 import styles from '@component/styles/Home.module.css'
 
 
-export default function Home() {
+export default function News() {
     return (
         <>
-           Users page will be here
+           News from jsonplaceholder/posts will be here
         </>
     )
 }

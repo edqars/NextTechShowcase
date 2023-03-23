@@ -1,13 +1,11 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import {Inter} from 'next/font/google'
-import styles from '@component/styles/Home.module.css'
+import styles from '@component/styles/Gallery.module.scss'
 
 
-export default function Home() {
+export default function Gallery() {
     return (
         <>
-           Users page will be here
+           Gallery of photos here
         </>
     )
 }
