@@ -1,13 +1,21 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import {Inter} from 'next/font/google'
-import styles from '@component/styles/Home.module.css'
-
 
 export default function Home() {
+
     return (
         <>
-           User page will be here
+           INDEX PAGE WAS HERE
         </>
     )
+}
+
+
+export async function getStaticProps(context) {
+
+        return {
+            redirect: {
+                destination: '/profile',
+                permanent: false,
+            },
+        };
+
 }

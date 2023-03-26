@@ -1,5 +1,6 @@
-import bcrypt from 'bcrypt';
 import {getUserByEmail} from "../../utils/database";
+import { v4 as uuidv4 } from 'uuid';
+
 
 export default async function login(req, res) {
     const { email, password } = req.body;
@@ -15,12 +16,11 @@ export default async function login(req, res) {
         return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    // Generate authentication token and set cookie
-    const authToken = 'some-auth-token';
-    res.setHeader('Set-Cookie', `authToken=${authToken}; HttpOnly`);
+    const authToken = uuidv4();
 
-    return res.status(200).json({ message: 'Login successful' });
+    res.setHeader('Authorization', authToken);
+
+
+    return res.status(200).json({ message: 'Login successful!!!' });
 }
 
-
-// changes to create Pull Request!

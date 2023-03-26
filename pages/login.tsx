@@ -1,11 +1,15 @@
 import { useState } from 'react';
-import { useRouter } from 'next/router';
 import cookie from 'js-cookie';
+import axios from "axios";
+import Router from 'next/router'
+
+import { parse } from 'cookie';
 
 function LoginPage() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const router = useRouter();
+
+    const [email, setEmail] = useState('q');
+    const [password, setPassword] = useState('w11');
+
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
@@ -17,19 +21,14 @@ function LoginPage() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const response = await fetch('/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password }),
-        });
-        if (response.ok) {
-            const data = await response.json();
-            cookie.set('token', data.token);
-            router.push('/');
+
+        const res = await axios.post('/api/login', {email, password})
+
+        if (res.status === 200) {
+            cookie.set('token', res.headers['authorization']);
+            Router.push('/profile')
         } else {
-            console.error('Login failed.');
+            console.error('Login failed.'); // todo add toaster
         }
     };
 
@@ -56,4 +55,20 @@ function LoginPage() {
 export default LoginPage;
 
 
-// changes to create Pull Request!
+export async function getServerSideProps(context) {
+    const cookies = parse(context.req.headers.cookie || '');
+    const token = cookies.token;
+
+    if (token) {
+        return {
+            redirect: {
+                destination: '/profile',
+                permanent: false,
+            },
+        };
+    }
+
+    return {
+        props: {}
+    };
+}
