@@ -1,0 +1,16 @@
+.profile-page {
+  padding: 30px;
+
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+
+  &__title {
+    color: #6442b8;
+    font-weight: 700;
+    font-size: 35px
+  }
+}

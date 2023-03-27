@@ -1,0 +1,28 @@
+.photos-page {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 30px;
+
+
+  &__title {
+    color: #6442b8;
+    font-weight: 700;
+    font-size: 35px
+  }
+
+  &__item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 50px;
+
+    p {
+      font-family: 'Agency FB';
+      color: #0d1515;
+      font-weight: 700;
+      font-size: 22px
+    }
+  }
+}

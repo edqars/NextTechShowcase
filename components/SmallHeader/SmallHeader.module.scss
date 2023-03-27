@@ -1,0 +1,18 @@
+.small-header {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+
+&__title {
+    color: #6442b8;
+    font-weight: 700;
+    font-size: 35px
+}
+
+    &__buttons {
+        display: flex;
+        gap: 5px;
+    }
+}

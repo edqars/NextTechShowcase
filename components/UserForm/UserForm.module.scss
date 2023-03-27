@@ -1,7 +1,33 @@
 .user-form {
 
-    &__input {
-        width: 500px;
+    margin-top: 90px;
+    padding: 0 10px;
+
+
+    &__item {
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         margin-top: 20px;
+
+        &_input {
+            font-size: 18px;
+        }
+
+      article {
+          font-size: 18px;
+          font-weight: 600;
+          color: #111d5b;
+          min-width: 200px;
+      }
+    }
+
+
+    &__submit {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }

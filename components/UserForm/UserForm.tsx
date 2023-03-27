@@ -1,20 +1,23 @@
-import  React, {useState} from "react"
+import React, {useState} from "react"
 import {Field, Form, Formik} from "formik"
 
-import { Button, Row, Col, Input, Checkbox, notification, Modal, Spin} from "antd"
+import {Button, Input, notification, Typography} from "antd"
 import {NotificationPlacement} from "antd/es/notification/interface";
 import axios from "axios";
 
+import Loader from "@component/components/Loader/Loader";
+import {getUserPropertyLabel} from "@component/utils/getUserPropertyLabel";
+
 import styles from './UserForm.module.scss'
 import classNames from 'classnames/bind'
-import Loader from "@component/components/Loader/Loader";
+
 const cx = classNames.bind(styles)
 
 
-
 export const UserForm = ({user}) => {
+
     const [api, contextHolder] = notification.useNotification();
-    const [validUser, setValidUser] = useState(user);
+    const [validUser, setValidUser] = useState(user)
     const [isLoading, setIsLoading] = useState(false)
 
 
@@ -22,7 +25,7 @@ export const UserForm = ({user}) => {
         api.info({
             message: `Уведомление!`,
             description:
-                value,
+            value,
             placement,
         });
     };
@@ -36,57 +39,76 @@ export const UserForm = ({user}) => {
         const data = await response
         if (data.status === 200) {
             setIsLoading(false)
-            console.log('AHAHAHAAHA', data.data.data)
             setValidUser(data.data.data)
-            openNotification('bottom', 'Gratz! The User has been updated!')
+            openNotification('bottom', 'Поздравляю! Пользователь был успешно обновлен')
         }
     }
 
     return (
-        <div
-            style={{
-                marginTop: 20,
-            }}
-        >
+        <section className={cx('user-form')}>
             {contextHolder}
             <Formik
                 enableReinitialize
                 initialValues={validUser}
                 onSubmit={handleSubmit}
             >
-                {() => (
-                    <Form
-                        style={{display: "grid", gridTemplateColumns: "1fr 1fr 1fr"}}
-                    >
-                        <div style={{flex: 1}}/>
-                        <div style={{background: "white", flex: 1, padding: 40}}>
+                <Form className={cx('user-form__form')}>
+                    <div>
+
+                        {
+                            Object.keys(user).map((item) => {
+                                if (item === 'address') return
+
+                                if (item === 'company') {
+                                    return (
+                                        <div key={item}>
+                                            <div className={cx('user-form__item')}>
+                                                <Typography>Название компании</Typography>
+                                                <Field className={cx('user-form__item_input')} name="company.name"
+                                                       as={Input}/>
+                                            </div>
 
 
-                            <Field className={cx('user-form__input')} name="name" as={Input}/>
-                            <Field className={cx('user-form__input')} name="username" as={Input}/>
-                            <Field className={cx('user-form__input')} name="email" as={Input}/>
-                            <Field className={cx('user-form__input')} name="phone" as={Input}/>
-                            <Field className={cx('user-form__input')} name="website" as={Input}/>
-                            <Field className={cx('user-form__input')} name="company.name" as={Input}/>
-                            <Field className={cx('user-form__input')} name="company.bs" as={Input}/>
-                            <Field className={cx('user-form__input')} name="company.catchPhrase" as={Input}/>
+                                            <div className={cx('user-form__item')}>
+                                                <Typography>Продукт</Typography>
+                                                <Field className={cx('user-form__item_input')}
+                                                       name="company.catchPhrase"
+                                                       as={Input}/>
+                                            </div>
 
+                                            <div className={cx('user-form__item')}>
+                                                <Typography>Сфера</Typography>
+                                                <Field className={cx('user-form__item_input')}
+                                                       name="company.bs"
+                                                       as={Input}/>
+                                            </div>
+                                        </div>
+                                    )
+                                }
 
-                            <Row style={{marginTop: 60}}>
-                                <Col offset={5}>
-                                    <Button.Group>
-                                        <Button htmlType="submit">Сохранить</Button>
-                                    </Button.Group>
-                                </Col>
-                            </Row>
+                                return (
+                                    <div className={cx('user-form__item')} key={item}>
+                                        <Typography>{getUserPropertyLabel(item)}</Typography>
+                                        <Field className={cx('user-form__item_input')}
+                                               name={item}
+                                               as={Input}/>
+                                    </div>
+                                )
+                            })
+                        }
+
+                        <div className={cx('user-form__submit')}>
+                            <Button size='middle' htmlType="submit">Сохранить</Button>
                         </div>
-                    </Form>
-                )}
+
+
+                    </div>
+                </Form>
             </Formik>
 
             <div>
                 <Loader visible={isLoading}/>
             </div>
-        </div>
+        </section>
     )
 }

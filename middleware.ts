@@ -15,10 +15,6 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next()
 }
 
-
-
-// Here you can specify all the paths for which this middleware function should run
-// Supports both a single string value or an array of matchers
 export const config = {
     matcher: ['/profile/:path*', '/photos/:path*', '/news/:path*'],
 }
