@@ -81,7 +81,12 @@ export default function Posts({posts, users}) {
 
                             <p>{item.body}</p>
 
-                            <p>@{users[item.userId].name}</p>
+                            {
+                                users[item.userId] && (
+                                  <p>@{users[item.userId].name}</p>
+                                )
+                            }
+
                         </div>
                     ))}
                 </InfiniteScroll>
