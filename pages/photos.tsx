@@ -45,7 +45,6 @@ export default function Photos({photos}) {
 
             <SmallHeader title={' Страница с фотографиями'} />
 
-
             <InfiniteScroll
                 dataLength={photosArray.length}
                 next={getMorePhotos}
@@ -53,7 +52,7 @@ export default function Photos({photos}) {
                 loader={<Spin size='large' />}
                 endMessage={<h4>Больше постов нет</h4>}
             >
-                {photosArray.map((item) => (
+                {photosArray?.map((item) => (
                     <div className={cx('photos-page__item')} key={item.id}>
 
                         <Image width={300} height={300} src={item.url} alt="quad"/>

@@ -24,7 +24,7 @@ const SmallHeader = ({title}) => {
                 <Button
                     onClick={(e) => {
                         e.preventDefault()
-                        router.push('/profile')
+                        router.push('/')
                     }}>
                     Профиль
                 </Button>
