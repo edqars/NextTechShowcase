@@ -1,62 +1,62 @@
 import React from 'react';
-import {Button, Typography} from "antd";
+import { Button, Typography } from 'antd';
 
-import {useRouter} from "next/router";
-import cookie from "js-cookie";
+import { useRouter } from 'next/router';
 
-import styles from './SmallHeader.module.scss'
-import classNames from 'classnames/bind'
+import classNames from 'classnames/bind';
+import { signOut } from 'next-auth/react';
+import styles from './SmallHeader.module.scss';
 
-const cx = classNames.bind(styles)
+const cx = classNames.bind(styles);
 
+function SmallHeader({ title }) {
+  const router = useRouter();
 
-const SmallHeader = ({title}) => {
+  return (
+    <div className={cx('small-header')}>
+      <Typography className={cx('small-header__title')}>{title}</Typography>
 
-    const router = useRouter();
+      <div className={cx('small-header__buttons')}>
+        <Button
+          onClick={(e) => {
+            e.preventDefault();
+            router.push('/');
+          }}
+        >
+          Профиль
+        </Button>
 
-    return (
-        <div className={cx('small-header')}>
-            <Typography className={cx('small-header__title')}>
-                {title}
-            </Typography>
+        <Button
+          onClick={(e) => {
+            e.preventDefault();
+            router.push('/photos');
+          }}
+        >
+          Галерея
+        </Button>
 
-            <div className={cx('small-header__buttons')}>
-                <Button
-                    onClick={(e) => {
-                        e.preventDefault()
-                        router.push('/')
-                    }}>
-                    Профиль
-                </Button>
+        <Button
+          onClick={(e) => {
+            e.preventDefault();
+            router.push('/news');
+          }}
+        >
+          Новости
+        </Button>
 
-                <Button onClick={(e) => {
-                    e.preventDefault()
-                    router.push('/photos/')
-                }}>
-                    Галерея
-                </Button>
-
-                <Button
-                    onClick={(e) => {
-                        e.preventDefault()
-                        router.push('/news')
-                    }}>
-                    Новости
-                </Button>
-
-                <Button
-                    type="primary"
-                    danger
-                    onClick={(e) => {
-                        e.preventDefault()
-                        cookie.remove('token');
-                        router.push('/login')
-                    }}>
-                    выйти
-                </Button>
-            </div>
-        </div>
-    );
-};
+        <Button
+          type="primary"
+          danger
+          onClick={(e) => {
+            e.preventDefault();
+            signOut();
+          }}
+        >
+          выйти
+        </Button>
+      </div>
+    </div>
+  );
+}
 
 export default SmallHeader;

@@ -1,73 +1,49 @@
-import React, {useState} from "react";
-import axios from "axios";
+import React from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
-import InfiniteScroll from "react-infinite-scroll-component";
+import classnames from 'classnames/bind';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import SmallHeader from '../components/SmallHeader/SmallHeader';
+import styles from '../styles/Gallery.module.scss';
+import { fetchPhotos } from '../api/photos';
 
-import Image from 'next/image';
-import axiosInstance from "@component/utils/axiosInstance";
-import {Spin} from "antd";
+const cx = classnames.bind(styles);
 
-import SmallHeader from "@component/components/SmallHeader/SmallHeader";
+function Photos() {
+  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
+    ['photos'],
+    fetchPhotos,
+    {
+      getNextPageParam: (lastPage) => {
+        const lastPhotoId = lastPage.data[lastPage.data.length - 1]?.id;
+        return lastPhotoId ? lastPage.nextPage : undefined;
+      },
+    }
+  );
 
-import styles from '@component/styles/Gallery.module.scss'
-import classnames from 'classnames/bind'
-const cx = classnames.bind(styles)
+  return (
+    <main className={cx('gallery-page')}>
+      <SmallHeader title="Страница с фотографиями" />
 
-
-
-
-export async function getServerSideProps() {
-    const response = await axiosInstance.get('/photos?_limit=10&_page=1');
-    const photos = response.data;
-
-    return {
-        props: {
-            photos
-        }
-    };
+      <InfiniteScroll
+        dataLength={data?.pages.flatMap((page) => page.data).length ?? 0}
+        next={fetchNextPage}
+        hasMore={hasNextPage}
+        loader={<h4>Loading...</h4>}
+        endMessage={<p>No more photos to load.</p>}
+      >
+        {data?.pages.flatMap((page) =>
+          page.data.map((photo) => (
+            <div key={photo.id}>
+              <img src={photo.thumbnailUrl} alt={photo.title} />
+              <h2>{photo.title}</h2>
+              <h2>{photo.id}</h2>
+            </div>
+          ))
+        )}
+      </InfiniteScroll>
+    </main>
+  );
 }
 
-
-export default function Photos({photos}) {
-
-    const [photosArray, setPhotosArray] = useState(photos);
-    const [hasMore, setHasMore] = useState(true);
-
-    const getMorePhotos = async () => {
-        const response = await axios.post('/api/photos', {start: photosArray.length})
-        const newPhotos = await response.data.data;
-        setPhotosArray((photos) => [...photos, ...newPhotos]);
-    };
-
-
-    return (
-        <main className={cx('photos-page')} >
-
-            <SmallHeader title={' Страница с фотографиями'} />
-
-            <InfiniteScroll
-                dataLength={photosArray.length}
-                next={getMorePhotos}
-                hasMore={hasMore}
-                loader={<Spin size='large' />}
-                endMessage={<h4>Больше постов нет</h4>}
-            >
-                {photosArray?.map((item) => (
-                    <div className={cx('photos-page__item')} key={item.id}>
-
-                        <Image width={300} height={300} src={item.url} alt="quad"/>
-
-                            <p> {item.id}. {item.title}</p>
-                    </div>
-                ))}
-            </InfiniteScroll>
-
-        </main>
-    );
-
-}
-
-
-
-
-
+export default Photos;

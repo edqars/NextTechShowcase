@@ -1,25 +1,22 @@
-import {getUserByEmail} from "../../utils/database";
-import { v4 as uuidv4 } from 'uuid';
+import { Users } from '../../utils/data/users';
 
-
-export default async function login(req, res) {
-    const { email, password } = req.body;
-    const user = getUserByEmail(email);
-
+export default function handler(req, res) {
+  try {
+    if (req.method !== 'POST') {
+      res.status(405).send({ message: 'Разрешены только POST запросы' });
+      return;
+    }
+    const body = JSON.parse(JSON.stringify(req.body));
+    const user = Users.find(
+      (user) =>
+        user.email === body.email && user.password === parseInt(body.password)
+    );
     if (!user) {
-        return res.status(401).json({ message: 'Invalid email or password' });
+      res.status(404).send({ message: 'Пользователь не найден!' });
+      return;
     }
-
-    const matchPasswords = password === user.password
-
-    if (!matchPasswords) {
-        return res.status(401).json({'d': '1d'});
-    }
-
-    const authToken = uuidv4();
-
-    res.setHeader('Authorization', authToken);
-
-    return res.status(200).json({ message: 'Login successful!!!' });
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(405).send({ message: '{error.message}' });
+  }
 }
-
