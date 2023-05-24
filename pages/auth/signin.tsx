@@ -32,7 +32,7 @@ function Signin({ providers }) {
         Wow hello there!
       </Typography>
       <Typography className={cx('login-page__subtitle')}>
-        Введите логин и пароль!
+        Enter your email and password
       </Typography>
 
       <Formik
@@ -52,7 +52,7 @@ function Signin({ providers }) {
             </div>
 
             <div className={cx('login-page__item')}>
-              <Typography>Пароль</Typography>
+              <Typography>Password</Typography>
               <Field
                 className={cx('login-page__item_input')}
                 name="password"
@@ -62,7 +62,7 @@ function Signin({ providers }) {
 
             <div className={cx('login-page__submit')}>
               <Button size="middle" htmlType="submit">
-                Войти
+                Log in
               </Button>
             </div>
           </div>

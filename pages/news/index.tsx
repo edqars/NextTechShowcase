@@ -3,9 +3,10 @@ import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import classNames from 'classnames/bind';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import SmallHeader from '../components/SmallHeader/SmallHeader';
-import styles from '../styles/News.module.scss';
-import { fetchPosts } from '../api/news';
+import Link from 'next/link';
+import SmallHeader from '../../components/SmallHeader/SmallHeader';
+import styles from '../../styles/News.module.scss';
+import { fetchPosts } from '../../api/news';
 
 const cx = classNames.bind(styles);
 
@@ -23,7 +24,7 @@ function News() {
 
   return (
     <main className={cx('news-page')}>
-      <SmallHeader title="Страница с новостями" />
+      <SmallHeader title="The news" />
 
       <div className={cx('news-page__content')} />
       <div>
@@ -37,11 +38,13 @@ function News() {
         >
           {data?.pages.flatMap((page) =>
             page.map((post) => (
-              <div className={cx('news-page__item')} key={post.id}>
-                <h2>{post.title}</h2>
-                <p>{post.body}</p>
-                <p>{post.id}</p>
-              </div>
+              <Link href={`/news/${post.id}`} key={post.id}>
+                <div className={cx('news-page__item')}>
+                  <h2>{post.title}</h2>
+                  <p>{post.body}</p>
+                  <p>{post.id}</p>
+                </div>
+              </Link>
             ))
           )}
         </InfiniteScroll>

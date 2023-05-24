@@ -1,4 +1,4 @@
-const Users = [
+export const Users = [
   { id: '112', name: 'Harry M. Morgan', email: '1', password: 2, role: 'user' },
   {
     id: '111',
@@ -29,4 +29,3 @@ const Users = [
     role: 'user',
   },
 ];
-export { Users };

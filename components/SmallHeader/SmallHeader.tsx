@@ -23,7 +23,7 @@ function SmallHeader({ title }) {
             router.push('/');
           }}
         >
-          Профиль
+          Profile
         </Button>
 
         <Button
@@ -32,7 +32,7 @@ function SmallHeader({ title }) {
             router.push('/photos');
           }}
         >
-          Галерея
+          Gallery
         </Button>
 
         <Button
@@ -41,7 +41,7 @@ function SmallHeader({ title }) {
             router.push('/news');
           }}
         >
-          Новости
+          News
         </Button>
 
         <Button
@@ -52,7 +52,7 @@ function SmallHeader({ title }) {
             signOut();
           }}
         >
-          выйти
+          Log out
         </Button>
       </div>
     </div>

@@ -19,7 +19,7 @@ export const authOptions = {
         },
       },
 
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         const { email, password } = credentials;
         const res = await fetch('http://localhost:3000/api/login', {
           method: 'POST',
@@ -44,7 +44,8 @@ export const authOptions = {
     async jwt({ token, user }) {
       return { ...token, ...user };
     },
-    async session({ session, token, user }) {
+    async session({ session, token }) {
+      // eslint-disable-next-line no-param-reassign
       session.user = token;
       return session;
     },

@@ -9,7 +9,6 @@ import classNames from 'classnames/bind';
 import { useMutation } from '@tanstack/react-query';
 import styles from './UserForm.module.scss';
 import Loader from '../Loader/Loader.tsx';
-import { getUserPropertyLabel } from '../../utils/getUserPropertyLabel';
 import { IUser } from './User';
 
 const cx = classNames.bind(styles);
@@ -24,7 +23,7 @@ export function UserForm({ user }: IUser) {
     value: string
   ) => {
     api.info({
-      message: 'Уведомление!',
+      message: 'Notification!',
       description: value,
       placement,
     });
@@ -40,7 +39,7 @@ export function UserForm({ user }: IUser) {
         setIsLoading(false);
         openNotification(
           'bottom',
-          'Поздравляю! Пользователь был успешно обновлен'
+          'Congrats! The user has been successfully updated'
         );
         setValidUser(data);
       },
@@ -65,25 +64,65 @@ export function UserForm({ user }: IUser) {
       >
         <Form className={cx('user-form__form')}>
           <div>
-            {Object.keys(user).map((item) => {
-              if (item === 'address') return;
-              if (item === 'company') return;
+            <div className={cx('user-form__item')}>
+              <Typography>Id</Typography>
 
-              return (
-                <div className={cx('user-form__item')} key={item}>
-                  <Typography>{getUserPropertyLabel(item)}</Typography>
-                  <Field
-                    className={cx('user-form__item_input')}
-                    name={item}
-                    as={Input}
-                  />
-                </div>
-              );
-            })}
+              <Field
+                disabled
+                className={cx('user-form__item_input')}
+                name="id"
+                as={Input}
+              />
+            </div>
+
+            <div className={cx('user-form__item')}>
+              <Typography>name</Typography>
+              <Field
+                className={cx('user-form__item_input')}
+                name="name"
+                as={Input}
+              />
+            </div>
+
+            <div className={cx('user-form__item')}>
+              <Typography>username</Typography>
+              <Field
+                className={cx('user-form__item_input')}
+                name="username"
+                as={Input}
+              />
+            </div>
+
+            <div className={cx('user-form__item')}>
+              <Typography>email</Typography>
+              <Field
+                className={cx('user-form__item_input')}
+                name="email"
+                as={Input}
+              />
+            </div>
+
+            <div className={cx('user-form__item')}>
+              <Typography>Phone number</Typography>
+              <Field
+                className={cx('user-form__item_input')}
+                name="phone"
+                as={Input}
+              />
+            </div>
+
+            <div className={cx('user-form__item')}>
+              <Typography>Website</Typography>
+              <Field
+                className={cx('user-form__item_input')}
+                name="website"
+                as={Input}
+              />
+            </div>
 
             <div className={cx('user-form__submit')}>
               <Button size="middle" htmlType="submit">
-                Сохранить
+                Save
               </Button>
             </div>
           </div>

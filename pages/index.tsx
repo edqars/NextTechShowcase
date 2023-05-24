@@ -13,7 +13,7 @@ export default function Profile() {
 
   return (
     <main className={cx('profile-page')}>
-      <SmallHeader title="Страница пользователя" />
+      <SmallHeader title="My page" />
       <UserForm user={data} />
     </main>
   );

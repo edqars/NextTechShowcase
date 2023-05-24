@@ -23,7 +23,7 @@ function Photos() {
 
   return (
     <main className={cx('gallery-page')}>
-      <SmallHeader title="Страница с фотографиями" />
+      <SmallHeader title="Gallery" />
 
       <InfiniteScroll
         dataLength={data?.pages.flatMap((page) => page.data).length ?? 0}
