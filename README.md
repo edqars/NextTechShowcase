@@ -35,18 +35,22 @@ These instructions will get you a copy of the project up and running on your loc
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/edqars/socials-me.git
+   git clone https://github.com/edqars/NextTechShowcase.git
 
-2. Install NPM packages
+2. cd 
+   ```sh
+   cd .\NextTechShowcase\ 
+
+3. Install NPM packages
 
    ```sh
    npm install
 
-3. Create .env.local file and add constant NextAuth_SECRET with any random string key, like this
+4. Create .env.local file and add constant NextAuth_SECRET with any random string key, like this
    ```dotenv
    NextAuth_SECRET='some random string'
 
-4. Run the development server
+5. Run the development server
    ```sh
    npm run dev
 
